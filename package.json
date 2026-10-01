@@ -1,0 +1,34 @@
+{
+  "name": "dsh-announcement",
+  "description": "System update announcement popup for the DSH web GUI: after each core update the first page load shows an announcement modal (once per announcement; a core version change re-arms it automatically). The plugins-panel config page (更新公告) edits the announcement and can clear the popup record to show the popup again. Hand-written, no build step.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.1.5-rc.1"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "license": "MIT"
+}

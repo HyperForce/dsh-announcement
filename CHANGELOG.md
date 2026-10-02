@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.0 (2026-10-02)
+
+- **Semantics change: read records are now PER BROWSER.** v0.1.0 stored one
+  global read receipt server-side, so the first browser to acknowledge closed
+  the popup for everyone — "first visit pops" only held for the very first
+  browser. Now each browser keeps its own record in localStorage
+  (`dsh-announcement.read` = `{id, epoch}`): every browser's first visit pops
+  once; reloads stay quiet for that browser only.
+- Re-arm model: the server stores an `ackEpoch` counter. `/clear-ack` (the
+  settings-panel button) and a core version change at boot bump the epoch —
+  every browser (including already-acknowledged ones) pops again on its next
+  load or tab focus. A saved announcement still re-arms by minting a fresh id.
+- The server-side `ack` row is informational only now (most recent read
+  anywhere, shown in the settings card); acknowledging no longer suppresses
+  other browsers.
+- The client re-fetches state on tab focus (throttled to one round-trip per
+  5s), so an announcement saved or re-armed while a page sat open pops without
+  a manual reload.
+- Verified on core 0.2.0-rc.2: node smokes (38 + 20 checks) and browser E2E
+  24/24 (fresh-browser first visit pops → ack → quiet → second simulated
+  browser pops → clear record re-arms the acked browser in-page → epoch
+  reload pops → save pops → no page errors).
+
 ## v0.1.0 (2026-10-01)
 
 - First release. Server half: five same-origin routes under `/api/announcement/*`

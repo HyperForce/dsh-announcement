@@ -14,16 +14,20 @@ Nothing else.
 
 ### Features
 
+- First visit pops: after each update (or record clear) the first visit from
+  EVERY browser shows the announcement once — read records are kept per
+  browser, so one person acknowledging never silences the others.
 - Auto re-arm: the plugin records the DSH core version at boot; a version
-  change (i.e. an update) clears the read record, so every browser pops the
-  announcement again on its first page load.
-- One popup per announcement: acknowledging (我知道了) stores a global read
-  record server-side; reloads stay quiet until the announcement changes.
+  change (i.e. an update) bumps the re-arm epoch, so all browsers pop again on
+  their first page load. Saving a new announcement re-arms the same way.
 - Plugins-panel page (**更新公告**): edit the announcement (title + body),
-  clear the popup record to show it again, or remove it (two-step confirm).
+  clear the popup record (re-arms every browser), or remove it (two-step
+  confirm). The card shows this browser's read state and the global
+  last-read time.
 
-> The read record is global (single-tenant): the first browser to acknowledge
-> closes the popup for everyone. UI-level only — nothing else is gated.
+> The read record lives in each browser's localStorage; the server only keeps
+> the announcement, an informational last-read stamp, and the re-arm epoch.
+> UI-level only — nothing else is gated.
 
 Full history: [CHANGELOG.md](CHANGELOG.md).
 
@@ -43,8 +47,9 @@ dsh plugin --profile web remove dsh-announcement
 docker restart dsh-harness
 ```
 
-The announcement and its read record persist in `<home>/.dsh/announcement.json`
-(inside the dsh-data volume) and survive restarts and reinstalls.
+The announcement persists in `<home>/.dsh/announcement.json` (inside the
+dsh-data volume) and survives restarts and reinstalls; each browser's read
+record lives in its own localStorage.
 
 ### Compatibility
 
@@ -69,15 +74,17 @@ MIT
 
 ### 功能说明
 
+- 首次访问弹窗：每次更新（或清除记录）后，**每个浏览器**的首次访问都会弹一次
+  公告——已读按浏览器分别记录，一个人点了「我知道了」不会让其他设备静默。
 - 更新自动重弹：插件启动时记录 DSH 核心版本，版本变化（即完成更新）时自动
-  清除已读记录，所有浏览器的首次打开都会再弹一次，无需任何手动操作。
-- 每份公告只弹一次：点「我知道了」即在服务端记录已读（全局记录），刷新不再
-  弹，直到公告内容变更。
-- 插件面板页（**更新公告**）：编辑公告（标题 + 正文）、清除弹窗记录重新弹窗、
-  两步确认移除公告。
+  递增重弹纪元，所有浏览器首次打开都会再弹，无需任何手动操作；保存新公告
+  同样自动重弹。
+- 插件面板页（**更新公告**）：编辑公告（标题 + 正文）、清除弹窗记录（所有
+  浏览器重新弹窗）、两步确认移除公告。卡片同时显示本浏览器已读状态与全局
+  最近已读时间。
 
-> 已读记录为全局（单租户）：第一个点「我知道了」的浏览器代表所有人关闭弹窗。
-> 仅界面层，不拦截任何其他功能。
+> 已读记录保存在各浏览器 localStorage；服务器只存公告、信息性的最近已读
+> 时间戳和重弹纪元。仅界面层，不拦截任何其他功能。
 
 完整历史见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -97,8 +104,8 @@ dsh plugin --profile web remove dsh-announcement
 docker restart dsh-harness
 ```
 
-公告与已读记录保存在 `<home>/.dsh/announcement.json`（dsh-data 卷内），重启
-或重装不丢失。
+公告保存在 `<home>/.dsh/announcement.json`（dsh-data 卷内），重启或重装不丢
+失；各浏览器的已读记录存在各自浏览器的 localStorage 里。
 
 ### 兼容性
 

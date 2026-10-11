@@ -1,7 +1,7 @@
 {
   "name": "dsh-announcement",
-  "description": "System update announcement popup for the DSH web GUI: after each core update (or record clear) the first visit from EVERY browser shows the announcement modal once (per-browser read records); a core version change re-arms it automatically. The plugins-panel config page (更新公告) edits the announcement and can clear the popup record to re-arm all browsers. Hand-written, no build step.",
-  "version": "0.2.0",
+  "description": "System update announcement popup for the DSH web GUI: after each core update (or record clear) the first visit from EVERY browser shows the announcement modal once (per-browser read records); open pages re-check every minute, no reload needed; a core version change re-arms it automatically. The plugins-panel config page (更新公告) edits the announcement and can clear the popup record to re-arm all browsers. Hand-written, no build step.",
+  "version": "0.2.1",
   "type": "module",
   "main": "lib/index.js",
   "exports": {

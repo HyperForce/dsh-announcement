@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.2.1 (2026-10-07)
+
+- Open pages now re-check the announcement every 60 seconds while visible
+  (previously only on page load and tab focus): an announcement saved or
+  re-armed elsewhere pops on a forever-foreground page within a minute, no
+  reload or tab switch needed. One small state GET per minute at most; the
+  timer is cleared on dispose.
+- Verified on core 0.2.0-rc.2: smokes green; live test on the test box showed
+  the focused page silent before the poll (epoch stale after a server-side
+  clear-ack) and popping within the first 60s poll afterwards.
+
 ## v0.2.0 (2026-10-02)
 
 - **Semantics change: read records are now PER BROWSER.** v0.1.0 stored one

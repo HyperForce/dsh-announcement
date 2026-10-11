@@ -16,7 +16,8 @@ Nothing else.
 
 - First visit pops: after each update (or record clear) the first visit from
   EVERY browser shows the announcement once — read records are kept per
-  browser, so one person acknowledging never silences the others.
+  browser, so one person acknowledging never silences the others. Already-open
+  pages re-check every minute and pop without a reload.
 - Auto re-arm: the plugin records the DSH core version at boot; a version
   change (i.e. an update) bumps the re-arm epoch, so all browsers pop again on
   their first page load. Saving a new announcement re-arms the same way.
@@ -75,7 +76,8 @@ MIT
 ### 功能说明
 
 - 首次访问弹窗：每次更新（或清除记录）后，**每个浏览器**的首次访问都会弹一次
-  公告——已读按浏览器分别记录，一个人点了「我知道了」不会让其他设备静默。
+  公告——已读按浏览器分别记录，一个人点了「我知道了」不会让其他设备静默；
+  已打开的页面每分钟自动重查，无需刷新即可弹出。
 - 更新自动重弹：插件启动时记录 DSH 核心版本，版本变化（即完成更新）时自动
   递增重弹纪元，所有浏览器首次打开都会再弹，无需任何手动操作；保存新公告
   同样自动重弹。
